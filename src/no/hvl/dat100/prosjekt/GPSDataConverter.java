@@ -1,5 +1,6 @@
 package no.hvl.dat100.prosjekt;
-
+import static java.lang.Double.*;
+import static java.lang.Integer.*;
 public class GPSDataConverter {
 
 	// arrays for GPS data in the original representation as array of strings
@@ -33,7 +34,11 @@ public class GPSDataConverter {
 		
 		// TODO
 		// OPPGAVE - START
+		hr = parseInt(timestr.substring(11,13));
+		min = parseInt(timestr.substring(14,16));
+		sec = parseInt(timestr.substring(17,19));
 		
+		secs = sec + (60 * min) + (3600 * hr);
 		// OPPGAVE - SLUTT
 		return secs;
 	}
@@ -55,7 +60,15 @@ public class GPSDataConverter {
 		
 		// TODO
 		// OPPGAVE - START
+		for (int i = 0; i < n; i++) {
+		    latitudes[i] = parseDouble(latitudesstr[i]);
+		    longitudes[i] = parseDouble(longitudesstr[i]);	
+		    elevations[i] = parseDouble(elevationsstr[i]);
+		    times[i]= toSeconds(timesstr[i]);
 		
+		}
+		
+	
 		// Hint:
 		// iterer igjennom alle gps punkter (hint: bruk en for-løkke)
 		// konverter hver inngang gps datapunkt 
@@ -77,6 +90,17 @@ public class GPSDataConverter {
 		// TODO
 		// OPPGAVE - START
 		
+		int n = times.length;
+
+		for (int i = 0; i < n; i++) {
+			System.out.print(times[i]);
+			System.out.print(" (");
+			System.out.print(latitudes[i]);
+			System.out.print(", ");
+			System.out.print(longitudes[i]);
+			System.out.print(") ");
+			System.out.println(elevations[i]);
+		}		
 		
 		// OPPGAVE - SLUTT
 	}
