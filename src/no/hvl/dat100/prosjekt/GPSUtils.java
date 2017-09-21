@@ -2,6 +2,8 @@ package no.hvl.dat100.prosjekt;
 
 import static java.lang.Math.*;
 
+import java.util.Locale;
+
 public class GPSUtils {
 
 	public GPSUtils() {
@@ -16,7 +18,12 @@ public class GPSUtils {
 		
 		// TODO
 		// OPPGAVE - START
-				
+		 
+		int hr = secs/3600;
+		int min = (secs%3600)/60;
+		int sec = (secs%3600)%60;
+		
+		timestr = ((hr<10 ? "0":"")+hr+TIMESEP+(min<10 ? "0":"")+min+TIMESEP+(sec<10 ? "0":"")+sec);
 		// OPPGAVE - SLUTT
 		
 		return timestr;
@@ -40,11 +47,20 @@ public class GPSUtils {
 	public static double findMin(double[] da) {
 
 		// fjern = "0.0" når metoden implementeres for ikke få forkert minimum
-		double min = 0.0; 
+		double min = da[0]; 
 
 		// TODO
 		// OPPGAVE - START
+		
 
+		for (double d : da) {
+			if (d < min) {
+				min = d;
+			}
+		}
+		
+		
+		
 		// OPPGAVE - SLUT
 		return min;
 	}
@@ -55,11 +71,18 @@ public class GPSUtils {
 	// Beregn avstand mellom to gps punkter ved bruk av Haversine formlen
 	public static double distance(double latitude1, double longitude1, double latitude2, double longitude2) {
 
-		double a,c,d = 1.0; // fjern = 1.0
+		double a,c,d; // fjern = 1.0
 		
 		// TODO:
 		// OPPGAVE - START
+		double dLat = toRadians(latitude2-latitude1);
+		double dLon = toRadians(longitude2 - longitude1);
+		latitude1 = toRadians(latitude1);
+		latitude2 = toRadians(latitude2);
 		
+		a = pow((sin((dLat)/2)),2) + cos(latitude1)*cos(latitude2)*pow((sin(dLon)/2),2);
+        c = 2 * atan2(sqrt(a), sqrt(1-a));
+        d = R*c;
 		// OPPGAVE - SLUTT
 
 		return d;
@@ -72,6 +95,8 @@ public class GPSUtils {
 
 		// TODO:
 		// OPPGAVE - START
+		double snitt = distance(latitude1, longitude1, latitude2, longitude2)/secs;
+		speed = snitt*3.6;
 		
 		// OPPGAVE - SLUTT
 
@@ -90,7 +115,8 @@ public class GPSUtils {
 		
 		// TODO
 		// OPPGAVE - START
-		
+		String fmt = "%"+Integer.toString(TEXTWIDTH)+".2f";
+		str = String.format(Locale.ENGLISH,fmt,d);
 		// OPPGAVE - SLUTT
 		
 		return str;
