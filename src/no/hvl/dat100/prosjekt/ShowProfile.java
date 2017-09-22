@@ -52,17 +52,24 @@ public class ShowProfile extends EasyGraphics {
 
 		setColor(0, 0, 255);
 
-		// elevations tabellen innholder alle hÃ¸ydedata
+		// elevations tabellen innholder alle høydedata
 		for (int i = 0; i < elevations.length; i++) {
 
-			int x1, y1, x2, y2; // koordinator sÃ¸ylen 
+			int x1, y1, x2, y2; // koordinator søylen 
 
 			// TODO
 			// OPPGAVE - START
-
-			// regn ut koordinator for sÃ¸ylen / linjen
-			// (x1,y1) er startpunkt for sÃ¸ylen (linjen)
+			x1 = MARGIN + i*2;
+			y1 = ybase;
+			x2 = x1;
+			y2 = ybase - (int) elevations[i];
+			
+			drawLine(x1, y1, x2, y2);
+			
+			// regn ut koordinator for søylen / linjen
+			// (x1,y1) er startpunkt for søylen (linjen)
 			// (x2,y2) er slutt punkt.
+			
 
 			// OPPGAVE - SLUTT
 			
