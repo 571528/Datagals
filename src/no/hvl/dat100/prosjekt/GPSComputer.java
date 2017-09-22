@@ -1,5 +1,12 @@
 package no.hvl.dat100.prosjekt;
 
+import static java.lang.Math.atan2;
+import static java.lang.Math.cos;
+import static java.lang.Math.pow;
+import static java.lang.Math.sin;
+import static java.lang.Math.sqrt;
+import static java.lang.Math.toRadians;
+
 public class GPSComputer {
 	
 	public GPSComputer(GPSData gpsdata) {
@@ -19,6 +26,7 @@ public class GPSComputer {
 	public double[] longitudes;
 	public double[] elevations;
 	
+	private static int R = 6371000;
 	// beregn total distances (i meter)
 	public double totalDistance() {
 
@@ -29,12 +37,17 @@ public class GPSComputer {
 
 		// Hint: bruk distance-metoden fra GPSUtils.
 		
+		for (int i = 0; i < latitudes.length-1; i++) {
+			distance += GPSUtils.distance(latitudes[i], longitudes[i], latitudes[i+1], longitudes[i+1]);
+		}
+		
 		// OPPGAVE - SLUTT
 
 		return distance;
+		
 	}
 
-	// beregn totale hÃ¸ydemeter (i meter)
+	// beregn totale høydemeter (i meter)
 	public double totalElevation() {
 
 		double elevation = 0;
@@ -49,11 +62,11 @@ public class GPSComputer {
 	// beregn total tiden for hele turen (i sekunder)
 	public int totalTime() {
 		
-		int totaltime = 0;
+		int totaltime;
 		
 		// TODO 
 		// OPPGAVE START
-		
+		 totaltime = times[times.length-1] - times[0];
 		// OPPGAVE SLUTT
 		
 		return totaltime;
@@ -66,6 +79,9 @@ public class GPSComputer {
 		
 		// TODO
 		// OPPGAVE - START
+		for (int i = 1; i < speeds.length; i++) {
+			speeds [i] = GPSUtils.speed((times[i+1]-times[i]), latitudes[i], longitudes[i], latitudes[i+1], longitudes[i+1]);
+		}
 		
 		// OPPGAVE - SLUTT
 		return speeds;
@@ -78,7 +94,8 @@ public class GPSComputer {
 		
 		// TODO
 		// OPPGAVE - START
-				
+		maxspeed = GPSUtils.findMax(speeds());		
+		
 		// OPPGAVE - SLUTT
 		
 		return maxspeed;
@@ -90,8 +107,9 @@ public class GPSComputer {
 		double average = 0;
 		
 		// TODO
-		// OPPGAVE - START
-				
+		// OPPGAVE - START 
+			average = (totalDistance() / totalTime())*3.6;
+		
 		// OPPGAVE - SLUTT
 		
 		return average;
@@ -114,6 +132,21 @@ public class GPSComputer {
 		// OPPGAVE START
 		
 		// Energy Expended (kcal) = MET x Body Weight (kg) x Time (h)
+		kcal = met * weight * (secs/3600);
+		
+		if (speedmph < 10) {
+			met = 4.0;
+		} else if (speedmph < 12){
+			met = 6.0;
+		} else if (speedmph < 14) {
+			met = 8.0;
+		} else if (speedmph < 15) {
+			met = 10.0;
+		} else if (speedmph < 20) {
+			met = 12.0;
+		} else {
+			met = 16.0;
+		}	
 
 		// OPPGAVE SLUTT
 		
@@ -128,6 +161,7 @@ public class GPSComputer {
 		// OPPGAVE - START 
 		
 		// Hint: hent hastigheter i speeds tabellen og tider i timestabellen
+		
 		// disse er definer i toppen av klassen og lese automatisk inn
 		
 		// OPPGAVE - SLUTT
