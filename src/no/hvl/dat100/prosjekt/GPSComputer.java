@@ -54,7 +54,12 @@ public class GPSComputer {
 
 		// TODO
 		// OPPGAVE - START
-
+		
+		for (int i = 0; i < elevations.length-1; i++) {
+			double diff = elevations[i+1] - elevations[i];
+				if (diff > 0)
+			elevation += (elevations[i+1] - elevations[i]);
+			}
 		// OPPGAVE - SLUTT
 		return elevation;
 	}
