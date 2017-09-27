@@ -1,7 +1,7 @@
 package no.hvl.dat100.prosjekt;
 
 import javax.swing.JOptionPane;
-
+import java.util.Locale; 
 import easygraphics.EasyGraphics;
 
 public class ShowRoute extends EasyGraphics {
@@ -65,7 +65,10 @@ public class ShowRoute extends EasyGraphics {
 		
 		// TODO
 		// OPPGAVE - START
-		
+		double maxlat = GPSUtils.findMax(latitudes);
+		double minlat = GPSUtils.findMin(latitudes);
+
+		ystep = MAPXSIZE / (Math.abs(maxlat - minlat)); 
 		// OPPGAVE SLUTT
 		
 		return ystep;
@@ -85,9 +88,24 @@ public class ShowRoute extends EasyGraphics {
 		for (int i = 0; i < latitudes.length; i++) {
 
 			int x,y;
-
 			// TODO: OPPGAVE START
 			
+			int radius = 3; 
+			x= MARGIN + (int) ((longitudes[i]-minlon)* xstep);
+			y = ybase - (int) ((latitudes[i]-minlat)*ystep);
+			
+			fillCircle(x,y,radius);
+			
+			int x2,y2;
+			if(i ==( latitudes.length -1)) {
+				drawLine(x,y,x,y);
+				
+			}
+			else {
+				x2 = MARGIN + (int) ((longitudes[i+1] - minlon) * xstep);
+				y2 = ybase + (int) ((latitudes[i+1] - minlat)* ystep);
+				drawLine(x,y,x2,y2);
+			}
 			// må finne punkt nr i fra latitues og longitudes tabellene
 			// og sette x og y til der de skal tegnes som et punkt i vinduet
 			
@@ -106,7 +124,22 @@ public class ShowRoute extends EasyGraphics {
 		
 		// TODO:
 		// OPPGAVE - START
-				
+		double WEIGHT = 80.0;
+		int ySpace = 20;
+		
+		String time = String.format(Locale.US,"%-15s:%10s%n", "Total Time", GPSUtils.printTime(gpscomputer.totalTime()));
+		String distance = String.format(Locale.US,"%-15s:%10.2f km%n", "Total distance", gpscomputer.totalDistance()/1000);
+		String elevation = String.format(Locale.US,"%-15s:%10.2f m%n", "Total elevation", gpscomputer.totalElevation());
+		String maxSpeed = String.format(Locale.US,"%-15s:%10.2f km/t%n", "Max speed", gpscomputer.maxSpeed());
+		String avgSpeed = String.format(Locale.US,"%-15s:%10.2f km/t%n", "Average speed", gpscomputer.averageSpeed());
+		String totKcal = String.format(Locale.US,"%-15s:%10.2f kcal%n", "Energy", gpscomputer.totalKcal(WEIGHT));
+			
+		drawString(time, MARGIN, ySpace);
+		drawString(distance, MARGIN, ySpace*2);
+		drawString(elevation, MARGIN, ySpace*3);
+		drawString(maxSpeed, MARGIN, ySpace*4);
+		drawString(avgSpeed, MARGIN, ySpace*5);
+		drawString(totKcal, MARGIN, ySpace*6);
 		// OPPGAVE - SLUTT;
 	}
 
