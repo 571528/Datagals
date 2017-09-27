@@ -96,16 +96,6 @@ public class ShowRoute extends EasyGraphics {
 			
 			fillCircle(x,y,radius);
 			
-			int x2,y2;
-			if(i ==( latitudes.length -1)) {
-				drawLine(x,y,x,y);
-				
-			}
-			else {
-				x2 = MARGIN + (int) ((longitudes[i+1] - minlon) * xstep);
-				y2 = ybase + (int) ((latitudes[i+1] - minlat)* ystep);
-				drawLine(x,y,x2,y2);
-			}
 			// må finne punkt nr i fra latitues og longitudes tabellene
 			// og sette x og y til der de skal tegnes som et punkt i vinduet
 			
