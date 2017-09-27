@@ -1,5 +1,5 @@
 package no.hvl.dat100.prosjekt;
-
+import java.util.Locale; 
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.pow;
@@ -181,7 +181,12 @@ public class GPSComputer {
 		
 		// TODO
 		// OPPGAVE - START
-				
+			System.out.format(Locale.US,"%-15s:%10s%n", "Total Time", GPSUtils.printTime(totalTime()));
+			System.out.format(Locale.US,"%-15s:%10.2f km%n", "Total distance", totalDistance()/1000);
+			System.out.format(Locale.US,"%-15s:%10.2f m%n", "Total elevation", totalElevation());
+			System.out.format(Locale.US,"%-15s:%10.2f km/t%n", "Max speed", maxSpeed());
+			System.out.format(Locale.US,"%-15s:%10.2f km/t%n", "Average speed", averageSpeed());
+			System.out.format(Locale.US,"%-15s:%10.2f kcal%n", "Energy", totalKcal(WEIGHT));	
 		// OPPGAVE - SLUT
 	}
 	
