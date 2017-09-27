@@ -56,6 +56,27 @@ public class ShowSpeed extends EasyGraphics {
 		
 		// OPPGAVE - START		
 		
+		setColor(0, 0, 255);
+		int gjennomsnitt = 0;
+		for(int i=0; i<speeds.length; i++) {
+			int x1,x2,y1,y2;
+			
+			int bredde = 1;
+			int hoyde = ((int) speeds[i]);
+			gjennomsnitt = gjennomsnitt + hoyde;
+			if(hoyde<0) {
+				hoyde = 0;
+			}
+			y1 = ybase - hoyde;
+			x1 = 10 +((bredde*2) * i);
+			x2 = bredde;
+			y2 = hoyde;
+			fillRectangle(x1,y1,x2,y2);
+		}
+		gjennomsnitt = gjennomsnitt/speeds.length;
+		setColor(0, 255, 0);
+		fillRectangle(10, ybase-gjennomsnitt, 2*speeds.length, 1);
+		
 		// OPPGAVE - SLUTT
 	}
 }
